@@ -98,6 +98,11 @@ router.post(
   })
 );
 
+router.get('/messages', async(req, res) => {
+  const messages = await Message.find({})
+  return res.json(messages)
+})
+
 router.post('/message', async (req, res) => {
   console.log(req.body.createdBy)
 

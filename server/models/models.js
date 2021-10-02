@@ -6,10 +6,15 @@ const timestamp = `${day.getFullYear()}-${day.getMonth() + 1}-${day.getDate().to
 
 const userSchema = new Schema(
   {
+    firstName: {type: String},
+    lastName: {type: String},
     username: {type: String, required: true},
     password: {type: String, required: true},
     membershipStatus: {type: String, required: true},
-    messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
+    messages: [{type: Schema.Types.ObjectId, ref: 'Message'}],
+    likedMessages: [{type: Schema.Types.ObjectId, ref: 'Message'}],
+    comments: [{type: Schema.Types.ObjectId, ref: 'Message'}],
+    icon: {type: String}
   }
 )
 
@@ -18,6 +23,8 @@ const messageSchema = new mongoose.Schema(
     title: {type: String, required: true},
     text: {type: String},
     timestamp: {type: String, default: timestamp},
+    likes: {type: Number, default: 0},
+    replies: [{type: Schema.Types.ObjectId, ref: 'Message'}],
     createdBy: {type: Schema.Types.ObjectId, ref: 'User', required: true}
   }
 )
