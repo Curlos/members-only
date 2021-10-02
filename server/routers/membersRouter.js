@@ -6,7 +6,8 @@ const { User, Message } = require('../models/models')
 const bcrypt = require("bcryptjs")
 const router = express.Router()
 
-const CORRECT_PASSCODE = 'secret'
+const MEMBER_PASSCODE = 'member'
+const ADMIN_PASSCODE = 'admin'
 
 
 passport.use(
@@ -163,14 +164,14 @@ router.delete('/message/:messageID', async (req, res) => {
   return res.json(message)
 })
 
-router.put('/membership', async (req, res) => {
+router.put('/membership/member', async (req, res) => {
   const { username, guessedPasscode } = req.body
 
   if (!username || !guessedPasscode) {
     return res.send('Missing props!')
   }
 
-  if (guessedPasscode === CORRECT_PASSCODE) {
+  if (guessedPasscode === MEMBER_PASSCODE) {
     console.log(guessedPasscode)
     const user = await User.findOne({username: username})
 
@@ -182,6 +183,31 @@ router.put('/membership', async (req, res) => {
       return res.json(user)
     }
   }
+
+  return res.send('Incorrect passcode')
+})
+
+router.put('/membership/admin', async (req, res) => {
+  const { username, guessedPasscode } = req.body
+
+  if (!username || !guessedPasscode) {
+    return res.send('Missing props!')
+  }
+  
+  if (guessedPasscode === ADMIN_PASSCODE) {
+    console.log(guessedPasscode)
+    const user = await User.findOne({username: username})
+
+    if (!user) {
+      return res.send('User not found')
+    } else {
+      user.membershipStatus = 'Admin'
+      await user.save()
+      return res.json(user)
+    }
+  }
+
+  return res.send('Incorrect passcode')
 })
 
 module.exports = router;
