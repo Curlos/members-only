@@ -18,7 +18,7 @@ const messageSchema = new mongoose.Schema(
     title: {type: String, required: true},
     text: {type: String},
     timestamp: {type: String, default: timestamp},
-    createdBy: {type: Schema.Types.ObjectId, ref: 'User'}
+    createdBy: {type: Schema.Types.ObjectId, ref: 'User', required: true}
   }
 )
 
