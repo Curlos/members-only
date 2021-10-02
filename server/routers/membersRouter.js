@@ -6,6 +6,8 @@ const { User, Message } = require('../models/models')
 const bcrypt = require("bcryptjs")
 const router = express.Router()
 
+const CORRECT_PASSCODE = 'secret'
+
 
 passport.use(
   new LocalStrategy((username, password, done) => {
@@ -159,6 +161,27 @@ router.delete('/message/:messageID', async (req, res) => {
   await user.save()
 
   return res.json(message)
+})
+
+router.put('/membership', async (req, res) => {
+  const { username, guessedPasscode } = req.body
+
+  if (!username || !guessedPasscode) {
+    return res.send('Missing props!')
+  }
+
+  if (guessedPasscode === CORRECT_PASSCODE) {
+    console.log(guessedPasscode)
+    const user = await User.findOne({username: username})
+
+    if (!user) {
+      return res.send('User not found')
+    } else {
+      user.membershipStatus = 'Member'
+      await user.save()
+      return res.json(user)
+    }
+  }
 })
 
 module.exports = router;
