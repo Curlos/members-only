@@ -10,8 +10,7 @@ const router = express.Router()
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
-      console.log('finding nigga')
-      if (err) { 
+      if (err) {
         return done(err);
       }
       if (!user) {
@@ -19,7 +18,6 @@ passport.use(
       } else {
         bcrypt.compare(password, user.password, (err, res) => {
           if (res) {
-            console.log('ello mate')
             // passwords match! log user in
             return done(null, user)
           } else {
@@ -27,19 +25,18 @@ passport.use(
             return done(null, false, { message: "Incorrect password" })
           }
         })
-        return done(null, user);
       }
     });
   })
 );
 
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+  return done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
-    done(err, user);
+    return done(err, user);
   });
 });
 
@@ -59,7 +56,6 @@ router.post("/sign-up", async (req, res, next) => {
   const userFound = await User.find({username: newUsername})
 
   if (userFound.length > 0) {
-    console.log('fuck')
     return res.json({error: 'Username taken'})
   }
 
@@ -77,18 +73,18 @@ router.post("/sign-up", async (req, res, next) => {
       if (err) { 
         return next(err);
       }
-      res.redirect("/members");
+      return res.redirect("/members");
     });
   })
 });
 
 router.get('/success', (req, res) => {
-  res.json({user: req.user})
+  return res.json({user: req.user})
 })
 
 router.get('/failure', (req, res) => {
   console.log(req.user)
-  res.json({user: req.user})
+  return res.json({user: req.user})
 })
 
 router.post(
