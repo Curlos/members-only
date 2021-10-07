@@ -12,22 +12,84 @@ body {
   border-bottom: 5px solid #1E2125;
   padding: 20px;
 
-  .right {
-    float: right;
+  a {
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
   }
 
-  a {
-    font-size: 20px;
-    margin-left: 10px;
-    padding: 15px;
-    background-color: #000000;
-    color: white;
-    cursor: pointer;
-    border-radius: 10px;
-    text-decoration: none;
+  .right {
+    float: right;
 
-    &:hover {
-      background-color: #1E2125;
+    a {
+      font-size: 20px;
+      margin-left: 10px;
+      padding: 15px;
+      background-color: #000000;
+      color: white;
+      cursor: pointer;
+      border-radius: 10px;
+      text-decoration: none;
+  
+      &:hover {
+        background-color: #1E2125;
+      }
     }
+
+  }
+}
+
+.messagesContainer {
+  text-align: center;
+
+  .messageContainer {
+    margin: 10px 25% 10px 25%;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 20px;
+
+  }
+
+  .messageFooter {
+
+    display: flex;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      .userIcon {
+        font-size: 30px;
+        color: #22a2f8;
+        border: 4px solid #1A8CD8;
+        border-radius: 20px;
+        padding: 10px;
+      }
+    
+      .userNames {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    
+        margin-left: 10px;
+    
+        .fullName {
+          font-weight: 600;
+        }
+    
+        .username {
+          color: rgb(99, 99, 99);
+        }
+      }
+    }
+
+    .messageTimestamp {
+        display: flex;
+        justify-content: flex-end;
+    }
+  }
+
+  .messageFooter {
+    display: flex;
   }
 }

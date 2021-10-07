@@ -10,27 +10,43 @@ import Header from './components/Header'
 import Messages from './components/Messages';
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import MessagesContext from './contexts/MessagesContext'
+import LoginContext from './contexts/LoginContext';
+import UserContext from './contexts/UserContext';
 import './style.scss';
 
 const App = () => {
+
+  const [messages, setMessages] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [loggedInUser, setLoggedInUser] = useState({})
   
   return (
     <Router>
-      <Header />
+      <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
+        <UserContext.Provider value={{loggedInUser, setLoggedInUser}}>
+          <MessagesContext.Provider value={{messages, setMessages}}>
+            <Header />
 
-      <Switch>
-          <Route path="/sign-up" exact>
-            <SignUp />
-          </Route>
-          
-          <Route path="/login" exact>
-            <Login />
-          </Route>
+            <Switch>
+              <Route path="/sign-up" exact>
+                <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
+                  <SignUp />
+                </LoginContext.Provider>
+              </Route>
+              
+              <Route path="/login" exact>
+                <Login />
+              </Route>
 
-          <Route path="/" exact>
-            <Messages />
-          </Route>
-        </Switch>
+              <Route path="/" exact>
+                <Messages />
+              </Route>
+            </Switch>
+          </MessagesContext.Provider>
+        </UserContext.Provider>
+      </LoginContext.Provider>
+
     </Router>
   );
 }
