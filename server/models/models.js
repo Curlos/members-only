@@ -6,15 +6,15 @@ const timestamp = `${day.getFullYear()}-${day.getMonth() + 1}-${day.getDate().to
 
 const userSchema = new Schema(
   {
-    firstName: {type: String},
-    lastName: {type: String},
+    fullName: {type: String},
     username: {type: String, required: true},
     password: {type: String, required: true},
     membershipStatus: {type: String, required: true},
     messages: [{type: Schema.Types.ObjectId, ref: 'Message'}],
     likedMessages: [{type: Schema.Types.ObjectId, ref: 'Message'}],
     comments: [{type: Schema.Types.ObjectId, ref: 'Message'}],
-    icon: {type: String}
+    icon: {type: String},
+    lowerCaseUsername: {type: String, lowercase: true, trim: true}
   }
 )
 
