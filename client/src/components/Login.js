@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LoginContext from '../contexts/LoginContext';
 import UserContext from '../contexts/UserContext';
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 const Login = () => {
@@ -9,6 +9,8 @@ const Login = () => {
   const { loggedInUser, setLoggedInUser } = React.useContext(UserContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const history = useHistory()
 
   console.log(isLoggedIn)
   console.log(loggedInUser)
@@ -34,12 +36,15 @@ const Login = () => {
     }
 
     const response = await axios.post('http://localhost:8888/users/login', body)
+    const user = response.data.user
 
     console.log(response)
 
-    if (response.data.result === 'success') {
+    if (user) {
       setIsLoggedIn(true)
-
+      setLoggedInUser(user)
+      console.log(user)
+      history.push("/")
       
     } else {
       
@@ -49,10 +54,15 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>Log in to your account</div>
-      <input type="text" value={username} placeholder="Username" onChange={handleUsernameChange}></input>
-      <input type="password" value={password} placeholder="Password" onChange={handlePasswordChange}></input>
+    <form onSubmit={handleSubmit} class="loginForm">
+      <div className="logo">💉</div>
+      <div className="title">Log in to OnlyVaxxed</div>
+      <div>
+        <input type="text" value={username} placeholder="Username" onChange={handleUsernameChange}></input> 
+      </div>
+      <div>
+        <input type="password" value={password} placeholder="Password" onChange={handlePasswordChange}></input>
+      </div>
       <button onClick={handleSubmit}>Log In</button>
     </form>
   )

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import LoginContext from '../contexts/LoginContext';
 
 const SignUp = () => {
@@ -10,7 +11,7 @@ const SignUp = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  console.log(isLoggedIn)
+  const history = useHistory()
 
   const handleFullNameChange = (e) => {
     console.log(e.target.value)
@@ -43,16 +44,26 @@ const SignUp = () => {
     const data = await axios.post('http://localhost:8888/users/sign-up', body)
 
     console.log(data)
+    history.push("/")
     return data
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>Create your account</div>
-      <input type="text" value={fullName} placeholder="Full Name" onChange={handleFullNameChange}></input>
-      <input type="text" value={username} placeholder="Username" onChange={handleUsernameChange}></input>
-      <input type="password" value={password} placeholder="Password" onChange={handlePasswordChange}></input>
-      <button onClick={handleSubmit}>Sign Up</button>
+    <form onSubmit={handleSubmit} className="signUpForm">
+      <div className="logo">💉</div>
+      <div className="title">Create your account</div>
+      <div>
+        <input type="text" value={fullName} placeholder="Full Name" onChange={handleFullNameChange}></input>
+      </div>
+      <div>
+        <input type="text" value={username} placeholder="Username" onChange={handleUsernameChange}></input>
+      </div>
+      <div>
+        <input type="password" value={password} placeholder="Password" onChange={handlePasswordChange}></input>
+      </div>
+      <div>
+        <button onClick={handleSubmit}>Sign Up</button>
+      </div>
     </form>
   )
 }
