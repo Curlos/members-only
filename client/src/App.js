@@ -10,6 +10,7 @@ import Header from './components/Header'
 import Messages from './components/Messages';
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import NewMessageForm from './components/NewMessageForm'
 import MessagesContext from './contexts/MessagesContext'
 import LoginContext from './contexts/LoginContext';
 import UserContext from './contexts/UserContext';
@@ -29,6 +30,10 @@ const App = () => {
             <Header />
 
             <Switch>
+              <Route path="/create-message" exact>
+                <NewMessageForm />
+              </Route>
+
               <Route path="/sign-up" exact>
                 <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
                   <SignUp />

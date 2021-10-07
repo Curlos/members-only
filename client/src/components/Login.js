@@ -9,6 +9,7 @@ const Login = () => {
   const { loggedInUser, setLoggedInUser } = React.useContext(UserContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [invalidCredentials, setInvalidCredentials] = useState(false)
 
   const history = useHistory()
 
@@ -45,9 +46,9 @@ const Login = () => {
       setLoggedInUser(user)
       console.log(user)
       history.push("/")
-      
+      setInvalidCredentials(false)
     } else {
-      
+      setInvalidCredentials(true)
     }
 
     return response.data
@@ -58,11 +59,14 @@ const Login = () => {
       <div className="logo">💉</div>
       <div className="title">Log in to OnlyVaxxed</div>
       <div>
-        <input type="text" value={username} placeholder="Username" onChange={handleUsernameChange}></input> 
+        <input type="text" value={username} placeholder="Username" onChange={handleUsernameChange} className={`${invalidCredentials ? 'invalidInput' : ''}`}></input>
       </div>
+
       <div>
-        <input type="password" value={password} placeholder="Password" onChange={handlePasswordChange}></input>
+        <input type="password" value={password} placeholder="Password" onChange={handlePasswordChange} className={`${invalidCredentials ? 'invalidInput' : ''}`}></input>
       </div>
+
+      {invalidCredentials ? <div className="invalidInputText">Invalid credentials</div> : null}
       <button onClick={handleSubmit}>Log In</button>
     </form>
   )

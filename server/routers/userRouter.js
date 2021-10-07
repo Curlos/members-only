@@ -10,9 +10,11 @@ router.get('/', (req, res) => {
   res.json(req.user)
 })
 
-router.get("/log-out", (req, res) => {
+router.get("/logout", (req, res) => {
+  console.log('Logging out user')
+  const user = req.user
   req.logout();
-  res.redirect("/");
+  res.json({...user})
 });
 
 router.post("/sign-up", async (req, res, next) => {
@@ -36,7 +38,8 @@ router.post("/sign-up", async (req, res, next) => {
       password: hashedPassword,
       membershipStatus: 'Anonymous',
       messages: [],
-      lowerCaseUsername: req.body.username
+      lowerCaseUsername: req.body.username,
+      icon: req.body.icon
     }).save((err, result) => {
       console.log('hi')
       console.log(err)
