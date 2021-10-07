@@ -9,6 +9,18 @@ body {
   box-sizing: border-box;
 }
 
+.userIcon {
+  font-size: 30px;
+  color: #22a2f8;
+  border: 4px solid #1A8CD8;
+  border-radius: 50%;
+  padding: 15px;
+  margin: auto 10px;
+  cursor: pointer;
+  width: 79px;
+  height: 79px;
+}
+
 .headerContainer {
   font-size: 30px;
   border-bottom: 5px solid #1E2125;
@@ -37,8 +49,33 @@ body {
         background-color: #1E2125;
       }
     }
+    .username {
+      font-size: 20px;
+
+      .userIcon {
+        font-size: 20px;
+        height: auto;
+        width: auto;
+        border: 2px solid #1A8CD8;
+      }
+    }
+
+    .logoutButton {
+      background-color: #31A1F2;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px;
+      margin: auto 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #2187cf;
+      }
+    }
 
   }
+  
 }
 
 .messagesContainer {
@@ -50,22 +87,21 @@ body {
     border-radius: 10px;
     padding: 20px;
 
+    .messageTitle {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
   }
 
   .messageFooter {
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     .left {
       display: flex;
-      .userIcon {
-        font-size: 30px;
-        color: #22a2f8;
-        border: 4px solid #1A8CD8;
-        border-radius: 20px;
-        padding: 10px;
-      }
     
       .userNames {
         text-align: left;
@@ -96,7 +132,7 @@ body {
   }
 }
 
-.loginForm, .signUpForm {
+.loginForm, .signUpForm, .newMessageForm {
   text-align: center;
   .logo {
     font-size: 50px;
@@ -115,13 +151,60 @@ body {
     width: 40%;
   }
 
+  .invalidInput {
+    border: 5px solid red;
+  }
+
+  .invalidInputText {
+    color: red;
+  }
+
   button {
     background-color: #31A1F2;
     color: white;
     border: none;
     border-radius: 20px;
+    font-size: 16px;
     padding: 15px;
     margin: 10px;
     width: 40%;
+    cursor: pointer;
+  }
+
+  textarea {
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    width: 40%;
+    resize: vertical;
+    font-size: 16px;
+    font-family: "Noto Sans Display", sans-serif;
+
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.iconOptions {
+  display: flex;
+  justify-content: center;
+
+  .userIcon {
+    color: gray;
+    border-color: gray;
+
+    
+
+    &:hover {
+      color: #22a2f8;
+      border-color:#1A8CD8;
+    }
+  }
+
+  .selected {
+    color: #22a2f8;
+    border-color:#1A8CD8;
   }
 }

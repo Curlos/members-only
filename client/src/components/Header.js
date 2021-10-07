@@ -1,17 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import LoginContext from '../contexts/LoginContext';
 import UserContext from '../contexts/UserContext';
 import axios from 'axios'
 
 const Header = () => {
-
-  const { loggedInUser } = React.useContext(UserContext)
+  const { setIsLoggedIn } = React.useContext(LoginContext)
+  const { loggedInUser, setLoggedInUser } = React.useContext(UserContext)
   console.log(loggedInUser)
   console.log(Object.keys(loggedInUser).length)
 
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    setIsLoggedIn(false)
+    setLoggedInUser({})
     console.log('logout')
+    const user = await axios.get('http://localhost:8888/users/logout')
+    console.log(user)
   }
   
   return (
@@ -25,7 +30,12 @@ const Header = () => {
           </span>
         ) : (
           <div>
-            <span>{loggedInUser.username}</span>
+            <span>
+              <Link to="/create-message">Create Message</Link>
+              <span class="username">
+                <i className={`userIcon ${loggedInUser.icon || 'fas fa-user-md'}`} />{loggedInUser.username}
+              </span>
+            </span>
             <span>
               <button onClick={handleLogout} class="logoutButton">Logout</button>
             </span>
